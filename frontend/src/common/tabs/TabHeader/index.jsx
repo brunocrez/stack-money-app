@@ -3,7 +3,15 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { selectTab } from '../tabsActions';
+
 class TabHeader extends Component {
+  
+  componentDidMount() {
+    if (this.props.active) {
+      this.props.selectTab(this.props.target);
+    }
+  }
+
   render() {
     const isOn = this.props.tab.selected === this.props.target;
     return (      

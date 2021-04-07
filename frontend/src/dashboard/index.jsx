@@ -7,6 +7,7 @@ import ValueBox from '../common/widget/ValueBox';
 import Row from '../common/layout/Row';
 
 const URL = 'http://localhost:3003/api';
+
 class Dashboard extends Component {
 
   constructor(props) {
@@ -14,7 +15,7 @@ class Dashboard extends Component {
     this.state = { credit: 0, debt: 0 };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     axios
       .get(`${URL}/billingCycles/summary`)
       .then(res => this.setState(res.data));
