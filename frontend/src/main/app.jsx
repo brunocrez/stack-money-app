@@ -6,6 +6,7 @@ import Header from '../common/template/Header';
 import Sidebar from '../common/template/Sidebar';
 import Footer from '../common/template/Footer';
 import Routes from './routes';
+import ToastMessages from '../common/messages/ToastMessages';
 
 export default props => (
   <div className="wrapper">
@@ -15,5 +16,6 @@ export default props => (
       <Routes />
     </div>
     <Footer />
+    <ToastMessages />
   </div>
 );
