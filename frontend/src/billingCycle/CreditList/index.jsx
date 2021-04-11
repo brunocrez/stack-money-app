@@ -7,23 +7,24 @@ import InputCreditDebt from '../../common/form/InputCreditDebt';
 class CreditList extends Component {
 
   renderRows() {
-    return (
-      <tr>
+    const list = this.props.list || [];
+    return list.map((item, idx) => (
+      <tr key={idx}>
         <td>
           <Field
-            name="credits[0].name"
+            name={`credits[${idx}].name`}
             component={InputCreditDebt}
             readOnly={this.props.readOnly} />
         </td>
         <td>
           <Field
-            name="credits[0].value"
+            name={`credits[${idx}].value`}
             component={InputCreditDebt}
             readOnly={this.props.readOnly} />
         </td>
         <td></td>
       </tr>
-    );
+    ));
   }
 
   render() {
