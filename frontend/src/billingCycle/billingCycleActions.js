@@ -1,6 +1,8 @@
+import { BILLING_CYCLES_FETCHED } from './billingCycleTypes';
+
 import axios from 'axios';
 import { toastr } from 'react-redux-toastr';
-import { reset, initialize } from 'redux-form';
+import { initialize } from 'redux-form';
 
 import { selectTab, showTabs } from '../common/tabs/tabsActions';
 
@@ -11,7 +13,7 @@ const INITIAL_VALUES = { credits: [{}], debts: [{}] };
 export function getList() {
   const request = axios.get(`${BASE_URL}/billingCycles`);
   return {
-    type: 'BILLING_CYCLES_FETCHED',
+    type: BILLING_CYCLES_FETCHED,
     payload: request
   }
 }
