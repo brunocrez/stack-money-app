@@ -1,3 +1,5 @@
+import './auth.css';
+
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { bindActionCreators } from 'redux';
@@ -6,7 +8,6 @@ import { connect } from 'react-redux';
 import { login, signup } from './authActions';
 import Row from '../common/layout/Row';
 import Grid from '../common/layout/Grid';
-import If from '../common/operator/If';
 import ToastMessages from '../common/messages/ToastMessages';
 import Input from '../common/form/InputAuth';
 
@@ -62,7 +63,7 @@ class Auth extends Component {
               icon="lock"
               show={loginMode} />
             <Row>
-              <Grid cols="4">
+              <Grid cols="12">
                 <button
                   type="submit"
                   className="btn btn-primary btn-block btn-flat">

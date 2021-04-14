@@ -3,12 +3,14 @@ import { USER_FETCHED, TOKEN_VALIDATED } from './authTypes';
 import axios from 'axios';
 import { toastr } from 'react-redux-toastr';
 
+import { OPEN_API_URL } from '../.env';
+
 export function login(values) {
-  return submit(`${process.env.OPEN_API_URL}/login`, values);
+  return submit(`${OPEN_API_URL}/login`, values);
 }
 
 export function signup() {
-  return submit(`${process.env.OPEN_API_URL}/signup`, values);
+  return submit(`${OPEN_API_URL}/signup`, values);
 }
 
 function submit(URL, values) {
