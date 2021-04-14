@@ -9,7 +9,7 @@ export function login(values) {
   return submit(`${OPEN_API_URL}/login`, values);
 }
 
-export function signup() {
+export function signup(values) {
   return submit(`${OPEN_API_URL}/signup`, values);
 }
 
