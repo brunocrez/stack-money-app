@@ -7,7 +7,7 @@ export function login(values) {
   return submit(`${process.env.OPEN_API_URL}/login`, values);
 }
 
-export function singup() {
+export function signup() {
   return submit(`${process.env.OPEN_API_URL}/signup`, values);
 }
 
