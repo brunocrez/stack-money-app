@@ -2,7 +2,7 @@ import { TOKEN_VALIDATED, USER_FETCHED } from './authTypes';
 
 const userKey = 'money_user';
 const INITIAL_STATE = {
-  user: JSON.parse(localStorage.getItem(userKey)),
+  user: { name: 'bruno', email: 'brunoc.rez@gmail.com'},//JSON.parse(localStorage.getItem(userKey)),
   validToken: false
 };
 
