@@ -3,7 +3,7 @@ import { USER_FETCHED, TOKEN_VALIDATED } from './authTypes';
 import axios from 'axios';
 import { toastr } from 'react-redux-toastr';
 
-import { OPEN_API_URL } from '../.env';
+import { OPEN_API_URL } from '../URLs';
 
 export function login(values) {
   return submit(`${OPEN_API_URL}/login`, values);
