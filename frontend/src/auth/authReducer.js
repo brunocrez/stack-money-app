@@ -2,11 +2,11 @@ import { TOKEN_VALIDATED, USER_FETCHED } from './authTypes';
 
 const userKey = 'money_user';
 const INITIAL_STATE = {
-  user: { name: 'bruno', email: 'brunoc.rez@gmail.com'},//JSON.parse(localStorage.getItem(userKey)),
+  user: JSON.parse(localStorage.getItem(userKey)),
   validToken: false
 };
 
-export default (state = INITIAL_STATE, action) => {
+const authReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case TOKEN_VALIDATED:
       if (action.payload) {
@@ -21,4 +21,6 @@ export default (state = INITIAL_STATE, action) => {
     default:
       return state;
   }
-} 
+}
+
+export default authReducer;

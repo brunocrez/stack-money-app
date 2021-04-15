@@ -1,7 +1,9 @@
 import React from 'react';
 
-export default props => (
+const TabsContent = (props) => (
   <div className="tab-content">
     {props.children}
   </div>
 );
+
+export default TabsContent;

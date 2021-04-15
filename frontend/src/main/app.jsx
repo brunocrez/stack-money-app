@@ -7,7 +7,7 @@ import Footer from '../common/template/Footer';
 import ToastMessages from '../common/messages/ToastMessages';
 import Routes from './routes';
 
-export default props => (
+const App = () => (
   <HashRouter>
     <div className="wrapper">
       <Header />
@@ -18,3 +18,5 @@ export default props => (
     </div>
   </HashRouter>
 );
+
+export default App;

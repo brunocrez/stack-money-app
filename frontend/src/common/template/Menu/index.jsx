@@ -3,7 +3,7 @@ import React from 'react';
 import MenuItem from './MenuItem';
 import MenuTree from './MenuTree';
 
-export default props => (
+const Menu = () => (
   <ul className="sidebar-menu">
     <MenuItem path="/" label="Dashboard" icon="dashboard" />
     <MenuTree label="Cadastro" icon="edit">
@@ -14,3 +14,5 @@ export default props => (
     </MenuTree>
   </ul>
 );
+
+export default Menu;

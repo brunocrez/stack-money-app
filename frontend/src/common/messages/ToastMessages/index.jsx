@@ -3,7 +3,7 @@ import ReduxToastr from 'react-redux-toastr';
 
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
 
-export default props => (
+const ToastMessages = (props) => (
   <ReduxToastr 
     timeOut={5000}
     newestOnTop={false}
@@ -13,3 +13,5 @@ export default props => (
     transitionOut="fadeOut"
     progressBar />
 );
+
+export default ToastMessages;

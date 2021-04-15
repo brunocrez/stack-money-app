@@ -2,10 +2,12 @@ import React from 'react';
 
 import Menu from '../Menu';
 
-export default props => (
+const Sidebar = () => (
   <aside className="main-sidebar">
     <section className="sidebar">
       <Menu />
     </section>
   </aside>
 );
+
+export default Sidebar;
