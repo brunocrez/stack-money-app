@@ -2,7 +2,7 @@ import { BILLING_CYCLES_FETCHED } from './billingCycleTypes';
 
 const INITIAL_STATE = { list: [] };
 
-export default (state = INITIAL_STATE, action) => {
+const billingCycleReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case BILLING_CYCLES_FETCHED:
       return { ...state, list: action.payload.data }
@@ -10,3 +10,5 @@ export default (state = INITIAL_STATE, action) => {
       return state
   }
 }
+
+export default billingCycleReducer;

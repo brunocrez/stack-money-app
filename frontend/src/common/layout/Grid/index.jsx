@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class Grid extends Component {
+class Grid extends Component {
   
   toCss(numbers) {
     const cols = numbers ? numbers.split(' ') : [];
@@ -23,3 +23,5 @@ export default class Grid extends Component {
     );
   }
 }
+
+export default Grid;

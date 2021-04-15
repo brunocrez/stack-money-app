@@ -4,7 +4,7 @@ import Grid from '../../common/layout/Grid';
 import Row from '../../common/layout/Row';
 import ValueBox from '../../common/widget/ValueBox';
 
-export default ({ credit, debt }) => (
+const Summary = ({ credit, debt }) => (
   <Grid cols="12">
     <fieldset>
       <legend>Resumo</legend>
@@ -31,3 +31,5 @@ export default ({ credit, debt }) => (
     </fieldset>
   </Grid>
 );
+
+export default Summary;

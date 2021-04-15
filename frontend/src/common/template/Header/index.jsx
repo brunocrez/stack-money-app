@@ -2,7 +2,7 @@ import React from 'react';
 
 import Navbar from '../Navbar';
 
-export default props => (
+const Header = () => (
   <header className="main-header">
     <a href="/#/" className="logo">
       <span className="logo-mini">
@@ -14,8 +14,10 @@ export default props => (
       </span>
     </a>
     <nav className="navbar navbar-static-top">
-      <a href className="sidebar-toggle" data-toggle="offcanvas"></a>
+      <a href="javascript:;" className="sidebar-toggle" data-toggle="offcanvas"></a>
       <Navbar />
     </nav>
   </header>
 );
+
+export default Header;

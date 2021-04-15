@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from '../../layout/Grid';
 
-export default props => (
+const Input =  (props) => (
   <Grid cols={props.cols}>
     <div className="form-group">
       <label htmlFor={props.name}>{props.label}</label>
@@ -14,3 +14,5 @@ export default props => (
     </div>
   </Grid>
 );
+
+export default Input;

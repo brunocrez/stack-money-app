@@ -7,14 +7,15 @@ import promise from 'redux-promise';
 import multi from 'redux-multi';
 import thunk from 'redux-thunk';
 
-import Routes from './main/routes';
 import reducer from './main/reducers';
+
+import AuthOrApp from './main/authOrApp';
 
 const store = applyMiddleware(multi, thunk, promise)(createStore)(reducer);
 
 ReactDOM.render(
   <Provider store={store}>
-    <Routes />
+    <AuthOrApp />
   </Provider>,
   document.getElementById('app')
 );

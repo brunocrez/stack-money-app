@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default props => (
+const InputCreditDebit = (props) => (
   <input
     className="form-control"
     {...props.input} 
@@ -8,3 +8,5 @@ export default props => (
     type={props.type}
     readOnly={props.readOnly} />
 );
+
+export default InputCreditDebit;
