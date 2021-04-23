@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/loader.js",
+    "dev": "nodemon",
     "prod": "pm2 start src/loader.js --name money-app",
     "publishToHeroku": "cd ../ && git subtree push --prefix backend heroku-backend master || true"
   },
@@ -28,6 +29,6 @@
     "nodemon": "^1.11.0"
   },
   "engines": {
-    "node" : ">=8.0.0"
+    "node": ">=8.0.0"
   }
 }
