@@ -14,7 +14,7 @@ const Header = () => (
       </span>
     </a>
     <nav className="navbar navbar-static-top">
-      <a href="javascript:;" className="sidebar-toggle" data-toggle="offcanvas"></a>
+      <a href="#" className="sidebar-toggle" data-toggle="offcanvas"></a>
       <Navbar />
     </nav>
   </header>

@@ -24,7 +24,7 @@ class Navbar extends Component {
             onMouseLeave={()=> this.changeOpen()}
             className={`dropdown user user-menu ${this.state.open ? 'open' :''}`}>
             <a
-              href="javascript:;"
+              href="#"
               onClick={()=> this.changeOpen()}
               aria-expanded={this.state.open ? 'true' : 'false'}
               className="dropdown-toggle"

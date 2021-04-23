@@ -21,7 +21,7 @@ class TabHeader extends Component {
       <If show={visible}>
         <li className={isOn ? 'active' : ''}>
           <a 
-            href="javascript:;"
+            href="#"
             data-toggle="tab"
             onClick={() => this.props.selectTab(this.props.target)}
             data-target={this.props.target}>
