@@ -32,7 +32,7 @@ export function validateToken(token) {
   return dispatch => {
     if (token) {
       axios
-        .post(`${process.env.OPEN_API_URL}/validateToken`, { token })
+        .post(`${OPEN_API_URL}/validateToken`, { token })
         .then(res => {
           dispatch({ type: TOKEN_VALIDATED, payload: res.data.valid })
         })
