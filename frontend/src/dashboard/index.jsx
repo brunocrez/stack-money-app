@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import ContentHeader from '../common/template/ContentHeader'
@@ -8,50 +8,50 @@ import Row from '../common/layout/Row';
 
 const URL = 'http://localhost:3003/api';
 
-class Dashboard extends Component {
+const Dashboard = () => {
 
-  constructor(props) {
-    super(props);
-    this.state = { credit: 0, debt: 0 };
-  }
+  const [summary, setSummary] = useState(null);
+  
+  useEffect(() => {
+    async function getSummary() {
+      const response = await axios.get(`${URL}/billingCycles/summary`);
+      setSummary(response.data);
+    }
+    getSummary();
+  }, []);
 
-  componentDidMount() {
-    axios
-      .get(`${URL}/billingCycles/summary`)
-      .then(res => this.setState(res.data));
-  }
+  return (
+    <div> 
+      { summary && 
+        <>
+          <ContentHeader title="Dashboard" small="Versão 1.0.0" />
+          <Content>
+            <Row>
+              <ValueBox
+                cols="12 4"
+                color="green"
+                icon="bank"
+                value={`R$ ${summary.credit}`}
+                text="Total de Créditos" />
+              <ValueBox
+                cols="12 4"
+                color="red"
+                icon="credit-card"
+                value={`R$ ${summary.debt}`}
+                text="Total de Débitos" />
+              <ValueBox
+                cols="12 4"
+                color="blue"
+                icon="money"
+                value={`R$ ${summary.credit - summary.debt}`}
+                text="Valor Consolidado" />
+            </Row>
+          </Content>
+        </>
+      }       
 
-  render() {
-    const { credit, debt } = this.state;
-
-    return (
-      <div>        
-        <ContentHeader title="Dashboard" small="Versão 1.0.0" />
-        <Content>
-          <Row>
-            <ValueBox
-              cols="12 4"
-              color="green"
-              icon="bank"
-              value={`R$ ${credit}`}
-              text="Total de Créditos" />
-            <ValueBox
-              cols="12 4"
-              color="red"
-              icon="credit-card"
-              value={`R$ ${debt}`}
-              text="Total de Débitos" />
-            <ValueBox
-              cols="12 4"
-              color="blue"
-              icon="money"
-              value={`R$ ${credit - debt}`}
-              text="Valor Consolidado" />
-          </Row>
-        </Content>
-      </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default Dashboard;
