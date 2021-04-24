@@ -9,6 +9,8 @@ import ToastMessages from '../common/messages/ToastMessages';
 
 import { OPEN_API_URL } from '../URLs';
 
+const userKey = 'money_user';
+
 const Auth = (props) => {
 
   const [loginMode, setLoginMode] = useState(true);
@@ -48,7 +50,18 @@ const Auth = (props) => {
   }
 
   function submit(param, data) {
-    axios.post(`${OPEN_API_URL}/${param}`, data);
+    axios
+      .post(`${OPEN_API_URL}/${param}`, data)
+      .then(res => {
+        localStorage.setItem(userKey, JSON.stringify(res.data));
+        // to do
+        // create global state = { validToken: true, user: JSON.parse(localStorage.getItem(userKey)) }
+      })
+      .catch(e => {
+        console.log(e.response.data)
+        // to do
+        // toast messages without redux
+      });
   }
 
   return (
