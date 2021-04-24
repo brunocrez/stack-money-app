@@ -1,17 +1,18 @@
 import './auth.css';
 
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 
 import Row from '../common/layout/Row';
 import Grid from '../common/layout/Grid';
 import ToastMessages from '../common/messages/ToastMessages';
 
+import { AuthContext } from '../contexts/AuthContext';
 import { OPEN_API_URL } from '../URLs';
 
-const userKey = 'money_user';
-
 const Auth = (props) => {
+
+  const { loggedUser, userKey } = useContext(AuthContext);
 
   const [loginMode, setLoginMode] = useState(true);
 
@@ -54,8 +55,6 @@ const Auth = (props) => {
       .post(`${OPEN_API_URL}/${param}`, data)
       .then(res => {
         localStorage.setItem(userKey, JSON.stringify(res.data));
-        // to do
-        // create global state = { validToken: true, user: JSON.parse(localStorage.getItem(userKey)) }
       })
       .catch(e => {
         console.log(e.response.data)
