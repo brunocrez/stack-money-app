@@ -1,90 +1,120 @@
 import './auth.css';
 
-import React, { Component } from 'react';
-import { reduxForm, Field } from 'redux-form';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
+import axios from 'axios';
 
-import { login, signup } from './authActions';
 import Row from '../common/layout/Row';
 import Grid from '../common/layout/Grid';
 import ToastMessages from '../common/messages/ToastMessages';
-import Input from '../common/form/InputAuth';
 
-class Auth extends Component {
-  
-  constructor(props) {
-    super(props);
-    this.state = { loginMode: true };
+import { OPEN_API_URL } from '../URLs';
+
+const Auth = (props) => {
+
+  const [loginMode, setLoginMode] = useState(true);
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  function clearState() {
+    setEmail('');
+    setPassword('');
+    setName('');
+    setConfirmPassword('');
   }
 
-  changeMode() {
-    this.setState({ loginMode: !this.state.loginMode });
+  function changeMode() {
+    setLoginMode(prevState => !prevState);
+    clearState();
   }
 
-  onSubmit(values) {
-    const { login, signup } = this.props;
-    this.state.loginMode ? login(values) : signup(values);
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const data = {
+      email, 
+      password,
+      confirm_password: confirmPassword,
+      name
+    };
+    
+    if (loginMode) {
+      submit('login', data);
+    } else {
+      submit('signup', data);
+    }
   }
 
-  render() {
-    const { loginMode } = this.state;
-    const { handleSubmit } = this.props;
-    return (
-      <div className="login-box">
-        <div className="login-logo"> Money</div>
-        <div className="login-box-body">
-          <p className="login-box-msg">Bem-vindo!</p>
-          <form onSubmit={handleSubmit(v => this.onSubmit(v))}>
-            <Field
-              component={Input}
-              type="input"
-              name="name"
-              placeholder="Nome"
-              icon="user"
-              show={loginMode} />
-            <Field
-              component={Input}
-              type="email"
-              name="email"
+  function submit(param, data) {
+    axios.post(`${OPEN_API_URL}/${param}`, data);
+  }
+
+  return (
+    <div className="login-box">
+      <div className="login-logo"> Money</div>
+      <div className="login-box-body">
+        <p className="login-box-msg">Bem-vindo!</p>
+        <form onSubmit={handleSubmit}>
+          { !loginMode && 
+            <div className="form-group has-feedback">
+              <input
+                className="form-control"
+                type="text"
+                placeholder="Nome"
+                value={name}
+                onChange={e => setName(e.target.value)}/>
+                <span className="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>          
+          }
+          <div className="form-group has-feedback">
+            <input
+              className="form-control"
+              type="text"
               placeholder="E-mail"
-              icon="envelope" />
-            <Field
-              component={Input}
+              value={email}
+              onChange={e => setEmail(e.target.value)}/>
+              <span className="glyphicon glyphicon-envelope form-control-feedback"></span>
+          </div>
+          <div className="form-group has-feedback">
+            <input
+              className="form-control"
               type="password"
-              name="password"
               placeholder="Senha"
-              icon="lock" />
-            <Field
-              component={Input}
-              type="password"
-              name="confirm_password"
-              placeholder="Confirmar Senha"
-              icon="lock"
-              show={loginMode} />
-            <Row>
-              <Grid cols="12">
-                <button
-                  type="submit"
-                  className="btn btn-primary btn-block btn-flat">
-                  {loginMode ? 'Entrar' : 'Registrar'}
-                </button>
-              </Grid>
-            </Row>
-          </form>
-          <br />
-          <a onClick={() => this.changeMode()}>
-            {loginMode ? 'Novo Usuário? Registre-se Aqui!' : 'Já possui cadastro? Entre Aqui!'}
-          </a>
-        </div>
-        <ToastMessages />
+              value={password}
+              onChange={e => setPassword(e.target.value)}/>
+              <span className="glyphicon glyphicon-lock form-control-feedback"></span>
+          </div>
+          { !loginMode && 
+            <div className="form-group has-feedback">
+              <input
+                className="form-control"
+                type="password"
+                placeholder="Confirmar Senha"
+                value={confirmPassword}
+                onChange={e => setConfirmPassword(e.target.value)}/>
+                <span className="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>          
+          }
+          <Row>
+            <Grid cols="12">
+              <button
+                type="submit"
+                className="btn btn-primary btn-block btn-flat">
+                {loginMode ? 'Entrar' : 'Registrar'}
+              </button>
+            </Grid>
+          </Row>
+        </form>
+        <br />
+        <a onClick={() => changeMode()}>
+          {loginMode ? 'Novo Usuário? Registre-se Aqui!' : 'Já possui cadastro? Entre Aqui!'}
+        </a>
       </div>
-    );
-  }
+      <ToastMessages />
+    </div>
+  );
 }
 
-Auth = reduxForm({ form: 'authForm' })(Auth);
-const mapDispatchToProps = dispatch => bindActionCreators({ login, signup }, dispatch);
-
-export default connect(null, mapDispatchToProps)(Auth);
-
+export default Auth;

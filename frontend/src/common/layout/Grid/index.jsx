@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Grid extends Component {
+const Grid = (props) => {
   
-  toCss(numbers) {
+  function toCss(numbers) {
     const cols = numbers ? numbers.split(' ') : [];
     let classes = '';
 
@@ -13,15 +13,14 @@ class Grid extends Component {
 
     return classes;
   }
-
-  render() {
-    const gridClasses = this.toCss(this.props.cols || '12');
-    return (
-      <div className={gridClasses}>
-        {this.props.children}
-      </div>
-    );
-  }
+  
+  const gridClasses = toCss(props.cols || '12');
+  
+  return (
+    <div className={gridClasses}>
+      {props.children}
+    </div>
+  );  
 }
 
 export default Grid;
