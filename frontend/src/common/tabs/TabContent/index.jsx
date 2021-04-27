@@ -1,21 +1,15 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import If from '../../operator/If';
+import React from 'react';
 
-class TabContent extends Component {
-  render() {
-    const isOn = this.props.tab.selected === this.props.id;
-    const visible = this.props.tab.visible[this.props.id];
-    return (
-      <If show={visible}>
-        <div id={this.props.id} className={`tab-pane ${isOn ? 'active' : ''}`}>
-          {this.props.children}
-        </div>
-      </If>
-    );
-  }
+const TabContent = (props) => {
+
+  const isOn = props.selectedTab === props.id;
+  // const visible = this.props.tab.visible[this.props.id];
+
+  return (
+    <div id={props.id} className={`tab-pane ${isOn ? 'active' : ''}`}>
+      {props.children}
+    </div>
+  );
 }
 
-const mapStateToProps = state => ({ tab: state.tab });
-
-export default connect(mapStateToProps)(TabContent);
+export default TabContent;
