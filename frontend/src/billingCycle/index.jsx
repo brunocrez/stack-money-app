@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
 
 import ContentHeader from '../common/template/ContentHeader'
 import Content from '../common/template/Content'
@@ -16,55 +14,75 @@ import BillingCycleForm from './BillingCycleForm';
 // Actions Imports
 import { init, create, update, remove } from '../billingCycle/billingCycleActions';
 
-class BillingCycle extends Component {
+const BillingCycle = () => {
+
+  const [selectedTab, setSelectedTab] = useState('tabList');
+  const [visibleTabs, setVisibleTabs] = useState(['tabList', 'tabCreate']);
   
-  componentDidMount() {
-    this.props.init();
-  }
-  
-  render() {    
-    return (
-      <div>
-        <ContentHeader title="Ciclos de Pagamento" small="Cadastro" />
-        <Content>
-          <Tabs>
-            <TabsHeader>
-              <TabHeader label="Listar" icon="bars" target="tabList" active="true" />
-              <TabHeader label="Incluir" icon="plus" target="tabCreate" />
-              <TabHeader label="Editar" icon="pencil" target="tabUpdate" />
-              <TabHeader label="Excluir" icon="trash-o" target="tabDelete" />
-            </TabsHeader>
-            <TabsContent>
-              <TabContent id="tabList">
-                <BillingCycleList />
-              </TabContent>
-              <TabContent id="tabCreate">
-                <BillingCycleForm
-                  onSubmit={this.props.create}
-                  buttonLabel="Inlcuir"
-                  buttonColor="primary" />
-              </TabContent>
-              <TabContent id="tabUpdate">
-                <BillingCycleForm
-                  onSubmit={this.props.update}
-                  buttonLabel="Editar"
-                  buttonColor="info" />
-              </TabContent>
-              <TabContent id="tabDelete">
-                <BillingCycleForm
-                  onSubmit={this.props.remove}
-                  buttonLabel="Excluir"
-                  buttonColor="danger"
-                  readOnly={true} />
-              </TabContent>
-            </TabsContent>
-          </Tabs>
-        </Content>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <ContentHeader title="Ciclos de Pagamento" small="Cadastro" />
+      <Content>
+        <Tabs>
+          <TabsHeader>
+            <TabHeader
+              selectedTab={selectedTab}
+              setSelectedTab={setSelectedTab}
+              label="Listar"
+              icon="bars"
+              target="tabList"
+              active="true" />
+            <TabHeader
+              selectedTab={selectedTab}
+              setSelectedTab={setSelectedTab}
+              label="Incluir"
+              icon="plus"
+              target="tabCreate" />
+            <TabHeader
+              selectedTab={selectedTab}
+              setSelectedTab={setSelectedTab}
+              label="Editar"
+              icon="pencil"
+              target="tabUpdate" />
+            <TabHeader
+              selectedTab={selectedTab}
+              setSelectedTab={setSelectedTab}
+              label="Excluir"
+              icon="trash-o"
+              target="tabDelete" />
+          </TabsHeader>
+
+          <TabsContent>
+            <TabContent selectedTab={selectedTab} id="tabList">
+              <BillingCycleList />
+            </TabContent>
+            <TabContent selectedTab={selectedTab} id="tabCreate">
+              <h2>Create</h2>
+              {/* <BillingCycleForm
+                onSubmit={this.props.create}
+                buttonLabel="Inlcuir"
+                buttonColor="primary" /> */}
+            </TabContent>
+            <TabContent selectedTab={selectedTab} id="tabUpdate">
+              <h2>Update</h2>
+              {/* <BillingCycleForm
+                onSubmit={this.props.update}
+                buttonLabel="Editar"
+                buttonColor="info" /> */}
+            </TabContent>
+            <TabContent selectedTab={selectedTab} id="tabDelete">
+              <h2>Delete</h2>
+              {/* <BillingCycleForm
+                onSubmit={this.props.remove}
+                buttonLabel="Excluir"
+                buttonColor="danger"
+                readOnly={true} /> */}
+            </TabContent>
+          </TabsContent>
+        </Tabs>
+      </Content>
+    </div>
+  );
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({ init, create, update, remove }, dispatch);
-
-export default connect(null, mapDispatchToProps)(BillingCycle);
+export default BillingCycle;

@@ -6,7 +6,7 @@ import Content from '../common/template/Content';
 import ValueBox from '../common/widget/ValueBox';
 import Row from '../common/layout/Row';
 
-const URL = 'http://localhost:3003/api';
+import { API_URL } from '../URLs';
 
 const Dashboard = () => {
 
@@ -14,7 +14,7 @@ const Dashboard = () => {
   
   useEffect(() => {
     async function getSummary() {
-      const response = await axios.get(`${URL}/billingCycles/summary`);
+      const response = await axios.get(`${API_URL}/billingCycles/summary`);
       setSummary(response.data);
     }
     getSummary();

@@ -15,7 +15,6 @@ import { AuthContext } from '../contexts/AuthContext';
 const AuthOrApp = (props) => {
   
   const { loggedUser, setLoggedUser } = useContext(AuthContext);
-  console.log(loggedUser)
   
   function validateToken(token) {    
     if (token) {
