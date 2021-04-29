@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { reduxForm, Field, formValueSelector } from 'redux-form';
 import { bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
@@ -9,14 +10,30 @@ import Input from '../../common/form/Input';
 import ItemList from '../ItemList';
 import Summary from '../Summary';
 
+import { API_URL } from '../../URLs';
+
 const BillingCycleForm = (props) => {
 
-  // function calcSummary() {
-  //   return {
-  //     totalCredits: this.props.credits.map(el => +el.value || 0).reduce((acc, next) => acc + next, 0),
-  //     totalDebts: this.props.debts.map(el => +el.value || 0).reduce((acc, next) => acc + next, 0)
-  //   }
-  // }
+  const [list, setList] = useState(null);
+
+  const [creditList, setCreditList] = useState(null);
+
+  useEffect(() => {
+    async function getList() {
+      const response = await axios.get(`${API_URL}/billingCycles`);
+      setList(response.data);      
+    }
+    getList();
+  }, []);
+
+  function calcSummary() {
+    return {
+      totalCredits: list?.map(el => {
+        el.credits.map(credit => console.log(credit))
+      }),
+      // totalDebts: this.props.debts.map(el => +el.value || 0).reduce((acc, next) => acc + next, 0)
+    }
+  }
 
   // const { handleSubmit, readOnly, credits, debts } = this.props;
   // const { totalCredits, totalDebts } = this.calcSummary();
@@ -26,47 +43,33 @@ const BillingCycleForm = (props) => {
     console.log('HANDLE FORM!');
   }
 
+  console.log(list)
+
+  // const credits = list ? getParamList(list, 'credits') : [];
+  // const debts = list ? getParamList(list, 'debts') : [];
+
   return (
     <form onSubmit={handleSubmit}>
-      <div className="box-body">     
-        {/* <Field 
-          name="name" 
-          component={Input}
-          readOnly={readOnly}
-          label="Nome"
-          cols="12 4"
-          placeholder="Informe o Nome" /> */}
+      <div className="box-body">
         <Input
           label="Nome"
           cols="12 4"
           placeholder="Informe o Nome" />
-        {/* <Field 
-          name="month" 
-          component={Input}
-          readOnly={readOnly}
-          label="Mês"
-          cols="12 4"
-          placeholder="Informe o Mês" /> */}
         <Input
           label="Mês"
           cols="12 4"
-          placeholder="Informe o Mês" />          
-        {/* <Field 
-          name="year" 
-          component={Input}
-          readOnly={readOnly}
-          label="Ano"
-          cols="12 4"
-          placeholder="Informe o Ano" /> */}
+          placeholder="Informe o Mês" />
         <Input
           label="Ano"
           cols="12 4"
-          placeholder="Informe o Ano" />             
+          placeholder="Informe o Ano" />
+          { calcSummary() && console.log(calcSummary().totalCredits)}
         {/* <Summary credit={totalCredits} debt={totalDebts} /> */}
         <ItemList
           field="credits"
           legend="Créditos"
-          list={credits}
+          list={creditList}
+          setList={setList}
           setList="func"
           cols="12 6"
           readOnly={false} />
@@ -74,7 +77,7 @@ const BillingCycleForm = (props) => {
           showStatus={true}
           field="debts"
           legend="Débitos"
-          list={debts}
+          // list={debts}
           setList="func"
           cols="12 6"
           readOnly={false} />
@@ -83,7 +86,7 @@ const BillingCycleForm = (props) => {
         <button
           type="submit"
           className={`btn btn-${props.buttonColor}`}>
-          {this.props.buttonLabel}
+          {props.buttonLabel}
         </button>
         <button
           type="button"

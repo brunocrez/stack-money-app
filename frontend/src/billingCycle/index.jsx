@@ -57,11 +57,9 @@ const BillingCycle = () => {
               <BillingCycleList />
             </TabContent>
             <TabContent selectedTab={selectedTab} id="tabCreate">
-              <h2>Create</h2>
-              {/* <BillingCycleForm
-                onSubmit={this.props.create}
+              <BillingCycleForm
                 buttonLabel="Inlcuir"
-                buttonColor="primary" /> */}
+                buttonColor="primary" />
             </TabContent>
             <TabContent selectedTab={selectedTab} id="tabUpdate">
               <h2>Update</h2>
