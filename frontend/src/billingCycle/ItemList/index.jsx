@@ -14,99 +14,83 @@ const ItemList = (props) => {
   // const [creditList, setCreditList] = useState();
   // const [debtList, setDebtList] = useState();
 
-  function add(index, item = {}) {
-    if (!this.props.readOnly) {
-      this.props.arrayInsert('billingCycleForm', this.props.field, index, item);
-    }
+  // function add(index, item = {}) {
+  //   if (!this.props.readOnly) {
+  //     this.props.arrayInsert('billingCycleForm', this.props.field, index, item);
+  //   }
+  // }
+
+  // function remove(index) {
+  //   if (!this.props.readOnly && this.props.list.length > 1) {
+  //     this.props.arrayRemove('billingCycleForm', this.props.field, index);
+  //   }
+  // }
+
+  function add() {
+    console.log('add')
   }
 
-  function remove(index) {
-    if (!this.props.readOnly && this.props.list.length > 1) {
-      this.props.arrayRemove('billingCycleForm', this.props.field, index);
-    }
+  function remove() {
+    console.log('remove')
   }
 
-  function renderRows() {
-    const list = props.list || [];
-    return list.map((item, idx) => (
-      <tr key={idx}>
-        <td>
-          <input
-            className="form-control"
-            placeholder="Informe o Nome"
-            type="text"
-            value={item.name}
-            onChange={e => {
-              const name = e.target.value;
-              props.setList(currentItem => 
-                produce(currentItem, v => {
-                  v[idx].name = name;
-                })
-              )
-            }}/>
-          {/* <Field
-            name={`${this.props.field}[${idx}].name`}
-            placeholder="Informe o Nome"
-            component={InputCreditDebt}
-            readOnly={this.props.readOnly} /> */}
-        </td>
-        <td>
-          <Field
-            name={`${this.props.field}[${idx}].value`}
-            placeholder="Informe o Valor"
-            component={InputCreditDebt}
-            readOnly={this.props.readOnly} />
-        </td>
-        <If show={this.props.showStatus}>
-          <td>
-            <Field
-                name={`${this.props.field}[${idx}].status`}
-                placeholder="Informe o Status"
-                component={InputCreditDebt}
-                readOnly={this.props.readOnly} />
-          </td>
-        </If>
-        <td>
-          <button
-            type="button"
-            className="btn btn-success"
-            onClick={() => this.add(idx + 1)}>
-            <i className="fa fa-plus"></i>
-          </button>
-          <button
-            type="button"
-            className="btn btn-warning"
-            onClick={() => this.add(idx + 1, item)}>
-            <i className="fa fa-clone"></i>
-          </button>
-          <button
-            type="button"
-            className="btn btn-danger"
-            onClick={() => this.remove(idx)}>
-            <i className="fa fa-trash-o"></i>
-          </button>
-        </td>
-      </tr>
-    ));
-  }
+
 
   return (
-    <Grid cols={this.props.cols}>
+    <Grid cols={props.cols}>
       <fieldset>
-        <legend>{this.props.legend}</legend>
+        <legend>{props.legend}</legend>
         <table className="table">
           <thead>
             <tr>
               <th>Nome</th>
               <th>Valor</th>
-              <If show={this.props.showStatus}>
-                <th>Status</th>
-              </If>
+              { props.showStatus && <th>Status</th>}
               <th className="table-actions">Ações</th>
             </tr>
           </thead>
           <tbody>
-            {this.renderRows()}
+            <tr>
+              <td>
+                <input
+                  className="form-control"
+                  placeholder="Informe o Nome"
+                  type="text" />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Informe o Valor" />
+              </td>
+              { props.showStatus && 
+                <td>
+                  <input
+                    className="form-control"
+                    placeholder="Informe o Status" />
+                </td>
+              }
+              <td>
+                <button
+                  type="button"
+                  className="btn btn-success"
+                  onClick={() => add()}>
+                  <i className="fa fa-plus"></i>
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-warning"
+                  onClick={() => add()}>
+                  <i className="fa fa-clone"></i>
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={() => remove()}>
+                  <i className="fa fa-trash-o"></i>
+                </button>
+              </td>
+            </tr>
           </tbody>
         </table>
       </fieldset>
@@ -114,5 +98,4 @@ const ItemList = (props) => {
   );
 }
 
-//const mapDispatchToProps = dispatch => bindActionCreators({ arrayInsert, arrayRemove }, dispatch);
 export default ItemList;
