@@ -1,40 +1,27 @@
-import React, { Component, useState } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { Field, arrayInsert, arrayRemove } from 'redux-form';
+import React, { useState } from 'react';
 
 import { produce } from 'immer';
+import { generate } from 'shortid';
 
 import Grid from '../../common/layout/Grid';
-import InputCreditDebt from '../../common/form/InputCreditDebt';
-import If from '../../common/operator/If';
 
 const ItemList = (props) => {
 
-  // const [creditList, setCreditList] = useState();
-  // const [debtList, setDebtList] = useState();
-
-  // function add(index, item = {}) {
-  //   if (!this.props.readOnly) {
-  //     this.props.arrayInsert('billingCycleForm', this.props.field, index, item);
-  //   }
-  // }
-
-  // function remove(index) {
-  //   if (!this.props.readOnly && this.props.list.length > 1) {
-  //     this.props.arrayRemove('billingCycleForm', this.props.field, index);
-  //   }
-  // }
-
   function add() {
-    console.log('add')
+    if (props.showStatus) {
+      props.setList(currentList => [...currentList, { rndId: generate(), name: '', value: '', status: '' }]);
+    } else {
+      props.setList(currentList => [...currentList, { rndId: generate(), name: '', value: '' }]);
+    }
   }
 
-  function remove() {
-    console.log('remove')
+  function remove(credit) {
+    if (props.list.length == 1) {
+      return;
+    }
+
+    props.setList(currentList => currentList.filter(el => el.rndId !== credit.rndId));
   }
-
-
 
   return (
     <Grid cols={props.cols}>
@@ -50,47 +37,65 @@ const ItemList = (props) => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>
-                <input
-                  className="form-control"
-                  placeholder="Informe o Nome"
-                  type="text" />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Informe o Valor" />
-              </td>
-              { props.showStatus && 
+            {props.list.map((item, idx) => (
+              <tr key={idx}>
                 <td>
                   <input
                     className="form-control"
-                    placeholder="Informe o Status" />
+                    value={item.name}
+                    onChange={e => {
+                      const name = e.target.value;
+                      props.setList(currentItem =>
+                        produce(currentItem, v => {
+                          v[idx].name = name;
+                        })
+                      );
+                    }} />
                 </td>
-              }
-              <td>
-                <button
-                  type="button"
-                  className="btn btn-success"
-                  onClick={() => add()}>
-                  <i className="fa fa-plus"></i>
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-warning"
-                  onClick={() => add()}>
-                  <i className="fa fa-clone"></i>
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-danger"
-                  onClick={() => remove()}>
-                  <i className="fa fa-trash-o"></i>
-                </button>
-              </td>
-            </tr>
+                <td>
+                  <input
+                    className="form-control"
+                    value={item.value}
+                    onChange={e => {
+                      const value = e.target.value;
+                      props.setList(currentItem =>
+                        produce(currentItem, v => {
+                          v[idx].value = value;
+                        })
+                      );
+                    }} />
+                </td>
+                { props.showStatus &&
+                  <td>
+                    <input
+                      className="form-control"
+                      value={item.status}
+                      onChange={e => {
+                        const status = e.target.value;
+                        props.setList(currentItem =>
+                          produce(currentItem, v => {
+                            v[idx].status = status;
+                          })
+                        );
+                      }} />
+                  </td>
+                }               
+                <td>
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={add}>
+                    <i className="fa fa-plus"></i>
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    onClick={() => remove(item)}>
+                    <i className="fa fa-trash-o"></i>
+                  </button>
+                </td>
+              </tr>              
+            ))}
           </tbody>
         </table>
       </fieldset>
