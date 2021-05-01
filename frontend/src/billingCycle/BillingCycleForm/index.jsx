@@ -1,49 +1,60 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { reduxForm, Field, formValueSelector } from 'redux-form';
-import { bindActionCreators} from 'redux';
-import { connect } from 'react-redux';
 
-import { init } from '../billingCycleActions';
-
-import Input from '../../common/form/Input';
 import ItemList from '../ItemList';
 import Summary from '../Summary';
 
 import { API_URL } from '../../URLs';
+import Grid from '../../common/layout/Grid';
 
 const BillingCycleForm = (props) => {
 
-  const [list, setList] = useState(null);
+  const [creditList, setCreditList] = useState([ { rndId: '', name: '', value: ''} ]);
+  const [debtList, setDebtList] = useState([ { rndId: '', name: '', value: '', status: ''} ]);
 
-  const [creditList, setCreditList] = useState(null);
+  const [name, setName] = useState('');
+  const [month, setMonth] = useState('');
+  const [year, setYear] = useState(''); 
 
-  useEffect(() => {
-    async function getList() {
-      const response = await axios.get(`${API_URL}/billingCycles`);
-      setList(response.data);      
-    }
-    getList();
-  }, []);
+  // useEffect(() => {
+  //   async function getList() {
+  //     const response = await axios.get(`${API_URL}/billingCycles`);
+  //     setList(response.data);      
+  //   }
+  //   getList();
+  // }, []);
 
-  function calcSummary() {
-    return {
-      totalCredits: list?.map(el => {
-        el.credits.map(credit => console.log(credit))
-      }),
-      // totalDebts: this.props.debts.map(el => +el.value || 0).reduce((acc, next) => acc + next, 0)
-    }
-  }
+  // function calcSummary() {
+  //   return {
+  //     totalCredits: list?.map(el => {
+  //       el.credits.map(credit => console.log(credit))
+  //     }),
+  //     totalDebts: this.props.debts.map(el => +el.value || 0).reduce((acc, next) => acc + next, 0)
+  //   }
+  // }
 
   // const { handleSubmit, readOnly, credits, debts } = this.props;
   // const { totalCredits, totalDebts } = this.calcSummary();
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log('HANDLE FORM!');
-  }
 
-  console.log(list)
+    const data = {
+      name,
+      month,
+      year,
+      credits: creditList,
+      debts: debtList
+    }
+
+    console.log(data)
+    
+    axios.post(`${API_URL}/billingCycle`, data)
+      .then(res => res.data)
+      .catch(e => console.log(e))
+  }  
+
+  // console.log(list)
 
   // const credits = list ? getParamList(list, 'credits') : [];
   // const debts = list ? getParamList(list, 'debts') : [];
@@ -51,34 +62,50 @@ const BillingCycleForm = (props) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="box-body">
-        <Input
-          label="Nome"
-          cols="12 4"
-          placeholder="Informe o Nome" />
-        <Input
-          label="Mês"
-          cols="12 4"
-          placeholder="Informe o Mês" />
-        <Input
-          label="Ano"
-          cols="12 4"
-          placeholder="Informe o Ano" />
-          { calcSummary() && console.log(calcSummary().totalCredits)}
+        <Grid cols="12 4">
+          <div className="form-group">
+            <label>Nome</label>
+            <input
+              value={name}
+              onChange={e => setName(e.target.value)}
+              className="form-control"
+              placeholder="Informe o Nome" />
+          </div>
+        </Grid>
+        <Grid cols="12 4">
+          <div className="form-group">
+            <label>Mês</label>
+            <input
+              value={month}
+              onChange={e => setMonth(e.target.value)}
+              className="form-control"
+              placeholder="Informe o Mês" />
+          </div>
+        </Grid>
+        <Grid cols="12 4">
+          <div className="form-group">
+            <label>Ano</label>
+            <input
+              value={year}
+              onChange={e => setYear(e.target.value)}
+              className="form-control"
+              placeholder="Informe o Ano" />
+          </div>
+        </Grid>                
         {/* <Summary credit={totalCredits} debt={totalDebts} /> */}
         <ItemList
           field="credits"
           legend="Créditos"
           list={creditList}
-          setList={setList}
-          setList="func"
+          setList={setCreditList}
           cols="12 6"
           readOnly={false} />
         <ItemList
           showStatus={true}
           field="debts"
           legend="Débitos"
-          // list={debts}
-          setList="func"
+          list={debtList}
+          setList={setDebtList}
           cols="12 6"
           readOnly={false} />
       </div>

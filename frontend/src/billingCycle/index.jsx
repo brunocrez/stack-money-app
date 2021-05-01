@@ -28,6 +28,8 @@ const BillingCycle = () => {
             <TabHeader
               selectedTab={selectedTab}
               setSelectedTab={setSelectedTab}
+              visibleTabs={visibleTabs}
+              setVisibleTabs={setVisibleTabs}
               label="Listar"
               icon="bars"
               target="tabList"
@@ -35,18 +37,24 @@ const BillingCycle = () => {
             <TabHeader
               selectedTab={selectedTab}
               setSelectedTab={setSelectedTab}
+              visibleTabs={visibleTabs}
+              setVisibleTabs={setVisibleTabs}
               label="Incluir"
               icon="plus"
               target="tabCreate" />
             <TabHeader
               selectedTab={selectedTab}
               setSelectedTab={setSelectedTab}
+              visibleTabs={visibleTabs}
+              setVisibleTabs={setVisibleTabs}
               label="Editar"
               icon="pencil"
               target="tabUpdate" />
             <TabHeader
               selectedTab={selectedTab}
               setSelectedTab={setSelectedTab}
+              visibleTabs={visibleTabs}
+              setVisibleTabs={setVisibleTabs}
               label="Excluir"
               icon="trash-o"
               target="tabDelete" />
